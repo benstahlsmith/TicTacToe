@@ -1,3 +1,5 @@
+import random as rd
+
 def create_board(n):
     return [[' ' for _ in range(n)] for _ in range(n)]
 
@@ -81,10 +83,23 @@ def check_for_winner(board):
         else:
             break
 
+
+def fill_random_space(board, player_icon):
+    n = len(board)
+    while 1==1:
+        move = [rd.randint(0,n-1), rd.randint(0,n-1)]
+        if board[move[0]][move[1]] == ' ':
+            board[move[0]][move[1]] = player_icon
+            return board
+            
+
+
+
 new_board = update_board(gameboard, [1,3], 'X')
 new_board = update_board(new_board, [2,2], 'X')
 new_board = update_board(new_board, [2,1], 'X')
+new_board = fill_random_space(new_board, 'O')
 
 display_board(new_board)
 
-check_for_winner(new_board)
+# check_for_winner(new_board)
