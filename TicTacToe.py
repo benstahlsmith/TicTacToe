@@ -36,7 +36,7 @@ def check_for_winner(board):
                 break
             elif current == prev:
                 if i == n - 1:
-                    print(row[i] + ' is the winner')
+                    print(current + ' is the winner')
                     return True
                 continue
             else:
@@ -50,15 +50,40 @@ def check_for_winner(board):
                 break
             elif current == prev:
                 if j == n-1:
-                    print(board[j][i] + ' is the winner')
+                    print(current + ' is the winner')
                     return True
                 continue
             else:
                 break
 
-new_board = update_board(gameboard, [1,1], 'X')
+    for i in range(1,n):
+        current = board[i][i]
+        prev = board[i-1][i-1]
+        if current == ' ' or prev == ' ':
+                break
+        elif current == prev:
+            if i == n-1:
+                print(current + ' is the winner')
+                return True
+            continue
+        else:
+            break
+    for i in range(1,n):
+        current = board[i][n-i-1]
+        prev = board[i-1][n-i]
+        if current == ' ' or prev == ' ':
+                break
+        elif current == prev:
+            if i == n-1:
+                print(current + ' is the winner')
+                return True
+            continue
+        else:
+            break
+
+new_board = update_board(gameboard, [1,3], 'X')
+new_board = update_board(new_board, [2,2], 'X')
 new_board = update_board(new_board, [2,1], 'X')
-new_board = update_board(new_board, [3,1], 'X')
 
 display_board(new_board)
 
