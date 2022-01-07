@@ -14,7 +14,7 @@ def display_board(board):
             else:
                 print(entry[0])
         if len(board) != i:
-            print('_____')
+            print('_'*(len(board)*2))
             i += 1
         
 gameboard = create_board(3)
@@ -115,7 +115,32 @@ def one_player_game(n, player):
     return 'No-one'
 
 
-winner = one_player_game(3, 'Ben')
+def two_player_game(n, player1, player2):
+    board = create_board(n)
+    display_board(board)
+    player1_icon = 'X'
+    player2_icon = 'O'
+    maxmoves = n*n
+    moves = 0
+    while moves < maxmoves:
+        print(player1 + "'s move")
+        board = update_board(board, player1_icon)
+        display_board(board)
+        if check_for_winner(board):
+            return player1
+        moves += 1
+        if moves == maxmoves:
+            print("No more moves left.")
+            return 'No-one'
+        print(player2 + "'s move")
+        board = update_board(board, player2_icon)
+        display_board(board)
+        if check_for_winner(board):
+            return player2
+        moves += 1
+    return 'No-one'
+
+winner = two_player_game(2, 'Ben', 'Nick')
 
 print(winner)
 
