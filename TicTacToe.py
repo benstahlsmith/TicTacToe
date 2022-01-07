@@ -19,13 +19,15 @@ def display_board(board):
         
 gameboard = create_board(3)
 
-def update_board(board, move, player_icon):
-    if board[move[0]-1][move[1]-1] != ' ':
-        print('Invalid move. That space is full')
-        return board
-    else:
-        board[move[0]-1][move[1]-1] = player_icon
-        return board
+def update_board(board, player_icon):
+    while 1 == 1:
+        move = [input('Choose row: ')]
+        move += [input('Choose column: ')]
+        if board[move[0]-1][move[1]-1] != ' ':
+            print('Invalid move. That space is full. Please try again.')
+        else:
+            board[move[0]-1][move[1]-1] = player_icon
+            return board
 
 def check_for_winner(board):
     # print(board)
@@ -82,6 +84,7 @@ def check_for_winner(board):
             continue
         else:
             break
+    return False
 
 
 def fill_random_space(board, player_icon):
@@ -93,13 +96,36 @@ def fill_random_space(board, player_icon):
             return board
             
 
+def one_player_game(n, player):
+    board = create_board(n)
+    display_board(board)
+    player1_icon = 'X'
+    computer_icon = 'O'
+    while 1 == 1:
+        board = update_board(board, player1_icon)
+        display_board(board)
+        if check_for_winner(board):
+            return player
+        board = fill_random_space(board, computer_icon)
+        display_board(board)
+        if check_for_winner(board):
+            return 'Computer'
 
 
-new_board = update_board(gameboard, [1,3], 'X')
-new_board = update_board(new_board, [2,2], 'X')
-new_board = update_board(new_board, [2,1], 'X')
-new_board = fill_random_space(new_board, 'O')
+winner = one_player_game(3, 'Ben')
 
-display_board(new_board)
+print(winner)
 
-# check_for_winner(new_board)
+
+# def main():
+#     n = input("What board size do you want to use? ")
+#     player1 = input("Player 1 name: ")
+#     # player1_icon = input("Player 1 icon: ")
+#     while 1 == 1:
+#         player2 = input("Player 2 name (Enter nothing for 1 player game): ")
+#         if player2 == player1:
+#             print("That name has already been used.")
+#         else:
+#             break
+#     if player2 == '':
+#         one_player_game(n, player1)
