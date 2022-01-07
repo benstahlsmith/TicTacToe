@@ -140,20 +140,24 @@ def two_player_game(n, player1, player2):
         moves += 1
     return 'No-one'
 
-winner = two_player_game(2, 'Ben', 'Nick')
+def main():
+    n = int(input("What board size do you want to use? "))
+    player1 = input("Player 1 name: ")
+    # player1_icon = input("Player 1 icon: ")
+    while 1 == 1:
+        player2 = input("Player 2 name (Enter nothing for 1 player game): ")
+        if player2 == player1:
+            print("That name has already been used.")
+        else:
+            break
+    if player2 == '':
+        winner = one_player_game(n, player1)
+    else:
+        winner = two_player_game(n, player1, player2)
+    if winner == 'No-one':
+        print("Draw!")
+    else:
+        print(winner + ' has won the game. Nice Job!')
 
-print(winner)
-
-
-# def main():
-#     n = input("What board size do you want to use? ")
-#     player1 = input("Player 1 name: ")
-#     # player1_icon = input("Player 1 icon: ")
-#     while 1 == 1:
-#         player2 = input("Player 2 name (Enter nothing for 1 player game): ")
-#         if player2 == player1:
-#             print("That name has already been used.")
-#         else:
-#             break
-#     if player2 == '':
-#         one_player_game(n, player1)
+if __name__ == '__main__':
+    main()
