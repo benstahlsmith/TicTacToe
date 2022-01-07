@@ -30,7 +30,6 @@ def update_board(board, player_icon):
             return board
 
 def check_for_winner(board):
-    # print(board)
     n = len(board)
     for row in board:
         for i in range(1,n):
@@ -97,15 +96,23 @@ def one_player_game(n, player):
     display_board(board)
     player1_icon = 'X'
     computer_icon = 'O'
-    while 1 == 1:
+    maxmoves = n*n
+    moves = 0
+    while moves < maxmoves:
         board = update_board(board, player1_icon)
         display_board(board)
         if check_for_winner(board):
             return player
+        moves += 1
+        if moves == maxmoves:
+            print("No more moves left.")
+            return 'No-one'
         board = fill_random_space(board, computer_icon)
         display_board(board)
         if check_for_winner(board):
             return 'Computer'
+        moves += 1
+    return 'No-one'
 
 
 winner = one_player_game(3, 'Ben')
