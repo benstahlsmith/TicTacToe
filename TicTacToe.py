@@ -15,13 +15,8 @@ def display_board(board):
             print('_____')
             i += 1
         
-    
-
 gameboard = create_board(3)
 
-display_board(gameboard)
-
-print(gameboard)
 def update_board(board, move, player_icon):
     if board[move[0]-1][move[1]-1] != ' ':
         print('Invalid move. That space is full')
@@ -30,32 +25,40 @@ def update_board(board, move, player_icon):
         board[move[0]-1][move[1]-1] = player_icon
         return board
 
-
-new_board = update_board(gameboard, [1,1], 'X')
-
-
-display_board(new_board)
-
-print(new_board)
-
 def check_for_winner(board):
-    print(board)
+    # print(board)
     n = len(board)
     for row in board:
         for i in range(1,n):
-            if row[i] == row[i-1]:
+            current = row[i]
+            prev = row[i-1]
+            if current == ' ' or prev == ' ':
+                break
+            elif current == prev:
                 if i == n - 1:
                     print(row[i] + ' is the winner')
                     return True
-                i += 1
+                continue
+            else:
+                break
+    
+    for i in range(0,n):
+        for j in range(1,n):
+            current = board[j][i]
+            prev = board[j-1][i]
+            if current == ' ' or prev == ' ':
+                break
+            elif current == prev:
+                if j == n-1:
+                    print(board[j][i] + ' is the winner')
+                    return True
                 continue
             else:
                 break
 
-check_for_winner(new_board)
-
-new_board = update_board(new_board, [1,2], 'X')
-new_board = update_board(new_board, [1,3], 'X')
+new_board = update_board(gameboard, [1,1], 'X')
+new_board = update_board(new_board, [2,1], 'X')
+new_board = update_board(new_board, [3,1], 'X')
 
 display_board(new_board)
 
