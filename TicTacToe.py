@@ -1,9 +1,27 @@
 import random as rd
 
 def create_board(n):
+    """
+    creates a square game board of any size
+
+    Inputs:
+    n - integer
+
+    Outputs:
+    board - a list containg lists for each row
+    """
     return [[' ' for _ in range(n)] for _ in range(n)]
 
 def display_board(board):
+    """
+    Displays a board in the console
+
+    Inputs:
+    board - game board created or updated by other functions
+
+    Outputs:
+    none
+    """
     i = 1
     for row in board:
         j = 1
@@ -17,9 +35,18 @@ def display_board(board):
             print('_'*(len(board)*2))
             i += 1
         
-gameboard = create_board(3)
 
 def update_board(board, player_icon):
+    """
+    Take in a current board and icon and have the player make a move. Will check to ensure move is valid before placing the icon.
+
+    Inputs:
+    board - list of lists created by create_bard
+    player_icon - icon of the current player, X or O
+
+    Outputs:
+    board - updated board with player move
+    """
     while 1 == 1:
         move = [int(input('Choose row: '))]
         move.append(int(input('Choose column: ')))
@@ -30,6 +57,16 @@ def update_board(board, player_icon):
             return board
 
 def check_for_winner(board):
+    """
+    Scans the board to see if a player has won
+
+    Inputs:
+    board - game board
+
+    Outputs:
+
+    name of the winner
+    """
     n = len(board)
     for row in board:
         for i in range(1,n):
@@ -83,6 +120,15 @@ def check_for_winner(board):
 
 
 def fill_random_space(board, player_icon):
+    """
+    Inputs the icon into a random spot on the board. Used for computer players
+    Inputs:
+    board - game board
+    player_icon - icon for the computer
+
+    Outputs:
+    updated game board
+    """
     n = len(board)
     while 1==1:
         move = [rd.randint(0,n-1), rd.randint(0,n-1)]
@@ -92,6 +138,16 @@ def fill_random_space(board, player_icon):
             
 
 def one_player_game(n, player):
+    """
+    Plays a game with one player against the computer
+
+    Inputs:
+    n - size of the game board
+    player - name of the player
+
+    Outputs:
+    name of the winner
+    """
     board = create_board(n)
     display_board(board)
     player1_icon = 'X'
@@ -116,6 +172,17 @@ def one_player_game(n, player):
 
 
 def two_player_game(n, player1, player2):
+    """
+    Plays a game with 2 players
+
+    Inputs:
+    n - size of the game board
+    player1 - name of the player1
+    player2 - name of the player2
+
+    Outputs:
+    name of the winner
+    """
     board = create_board(n)
     display_board(board)
     player1_icon = 'X'
