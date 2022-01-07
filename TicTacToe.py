@@ -21,8 +21,8 @@ gameboard = create_board(3)
 
 def update_board(board, player_icon):
     while 1 == 1:
-        move = [input('Choose row: ')]
-        move += [input('Choose column: ')]
+        move = [int(input('Choose row: '))]
+        move.append(int(input('Choose column: ')))
         if board[move[0]-1][move[1]-1] != ' ':
             print('Invalid move. That space is full. Please try again.')
         else:
@@ -40,7 +40,6 @@ def check_for_winner(board):
                 break
             elif current == prev:
                 if i == n - 1:
-                    print(current + ' is the winner')
                     return True
                 continue
             else:
@@ -54,7 +53,6 @@ def check_for_winner(board):
                 break
             elif current == prev:
                 if j == n-1:
-                    print(current + ' is the winner')
                     return True
                 continue
             else:
@@ -67,7 +65,6 @@ def check_for_winner(board):
                 break
         elif current == prev:
             if i == n-1:
-                print(current + ' is the winner')
                 return True
             continue
         else:
@@ -79,7 +76,6 @@ def check_for_winner(board):
                 break
         elif current == prev:
             if i == n-1:
-                print(current + ' is the winner')
                 return True
             continue
         else:
