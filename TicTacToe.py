@@ -17,6 +17,20 @@ def display_board(board):
         
     
 
-board = [[['X'], ['X'], ['X']], [['X'], ['X'], ['X']], [['X'], ['X'], ['X']]]
+board = create_board(3)
 
 display_board(board)
+
+
+def update_board(board, move, player_icon):
+    if board[move[0]-1][move[1]-1][0] != '':
+        print('Invalid move. That space is full')
+        return board
+    else:
+        board[move[0]-1][move[1]-1] = player_icon
+        return board
+
+
+new_board = update_board(board, [1,1], 'X')
+
+display_board(new_board)
