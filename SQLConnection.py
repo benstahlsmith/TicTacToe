@@ -17,11 +17,23 @@ cur.execute(f'''
 insert into games values ('{time}', 'Ben', 'Nick', 1,0,0)
 ''')
 
-# # cur.execute('''
-# # drop table games
-# # ''')
 
-conn.commit()
+def update_games_log(p1, p2, winner):
+    time = str(dt.datetime.now())
+    if p1 == winner:
+        cur.execute(f'''
+        insert into games values ('{time}', '{p1}', '{p2}', 1,0,0)
+        ''')
+    if p2 == winner:
+        cur.execute(f'''
+        insert into games values ('{time}', '{p1}', '{p2}', 0,1,0)
+        ''')
+    else:
+        cur.execute(f'''
+        insert into games values ('{time}', '{p1}', '{p2}', 0,0,1)
+        ''')
+
+    conn.commit()
 
 games = pd.read_sql_query('''
 select * from games
