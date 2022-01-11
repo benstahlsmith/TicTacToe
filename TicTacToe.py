@@ -1,4 +1,5 @@
 import random as rd
+import SQLConnection
 
 def create_board(n):
     """
@@ -208,23 +209,32 @@ def two_player_game(n, player1, player2):
     return 'No-one'
 
 def main():
-    n = int(input("What board size do you want to use? "))
-    player1 = input("Player 1 name: ")
-    # player1_icon = input("Player 1 icon: ")
     while 1 == 1:
-        player2 = input("Player 2 name (Enter nothing for 1 player game): ")
-        if player2 == player1:
-            print("That name has already been used.")
-        else:
-            break
-    if player2 == '':
-        winner = one_player_game(n, player1)
-    else:
-        winner = two_player_game(n, player1, player2)
-    if winner == 'No-one':
-        print("Draw!")
-    else:
-        print(winner + ' has won the game. Nice Job!')
+        print("1. Play a game.")
+        print("2. See record book.")
+
+        selectedoption = input('Enter option: ')
+        if selectedoption == 1:
+            n = int(input("What board size do you want to use? "))
+            player1 = input("Player 1 name: ")
+            # player1_icon = input("Player 1 icon: ")
+            while 1 == 1:
+                player2 = input("Player 2 name (Enter nothing for 1 player game): ")
+                if player2 == player1:
+                    print("That name has already been used.")
+                else:
+                    break
+            if player2 == '':
+                winner = one_player_game(n, player1)
+            else:
+                winner = two_player_game(n, player1, player2)
+            if winner == 'No-one':
+                print("Draw!")
+            else:
+                print(winner + ' has won the game. Nice Job!')
+            SQLConnection.update_games_log(player1, player2, winner)
+        elif selectedoption == 2:
+            
 
 if __name__ == '__main__':
     main()

@@ -5,6 +5,7 @@ import datetime as dt
 conn = sqlite3.connect('TicTacToeRecords.db')
 
 cur = conn.cursor()
+# cur.execute('''drop table games''')
 
 # cur.execute('''
 # Create table games (gametimestamp text, player1 text, player2 text, p1win int, p2win int, draw int)
@@ -12,6 +13,9 @@ cur = conn.cursor()
 # )
 
 def update_games_log(p1, p2, winner):
+    conn = sqlite3.connect('TicTacToeRecords.db')
+    cur = conn.cursor()
+
     time = str(dt.datetime.now())
     if p1 == winner:
         cur.execute(f'''
@@ -36,8 +40,9 @@ def update_games_log(p1, p2, winner):
 # update_games_log('Ben', 'Nick', 'Nick')
 
 
-def Top10Wins(conn):  
-    cur = conn.cursor() 
+def Top10Wins():  
+    conn = sqlite3.connect('TicTacToeRecords.db')
+    cur = conn.cursor()
 
     cur.execute('''
         create table Player1Wins as select distinct
