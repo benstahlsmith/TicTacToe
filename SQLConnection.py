@@ -35,8 +35,30 @@ def update_games_log(p1, p2, winner):
 
     conn.commit()
 
-games = pd.read_sql_query('''
-select * from games
-''',  con = conn)
+update_games_log('Ben', 'Nick', 'Ben')
+update_games_log('Ben', 'Nick', 'Nick')
+update_games_log('Ben', 'Nick', 'Ben')
 
-print(games)
+
+cur.execute('''
+    create table Player1Wins as select 
+        player1, 
+        p1win
+    from
+        games 
+''')
+
+cur.execute('''
+    create table Player2Wins as select 
+        player2, 
+        p2win
+    from
+        games 
+''')
+
+
+
+print(pd.read_sql_query('''select * from Player2Wins''', con = conn))
+
+cur.execute('''drop table Player1Wins''')
+cur.execute('''drop table Player2Wins''')
