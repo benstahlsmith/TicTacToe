@@ -11,13 +11,6 @@ cur = conn.cursor()
 # '''
 # )
 
-time = str(dt.datetime.now())
-print(time)
-cur.execute(f'''
-insert into games values ('{time}', 'Ben', 'Nick', 1,0,0)
-''')
-
-
 def update_games_log(p1, p2, winner):
     time = str(dt.datetime.now())
     if p1 == winner:
@@ -35,30 +28,66 @@ def update_games_log(p1, p2, winner):
 
     conn.commit()
 
-update_games_log('Ben', 'Nick', 'Ben')
-update_games_log('Ben', 'Nick', 'Nick')
-update_games_log('Ben', 'Nick', 'Ben')
+# update_games_log('Ben', 'Nick', 'Ben')
+# update_games_log('Ben', 'Nick', 'Nick')
+# update_games_log('Ben', 'Nick', 'Ben')
+
+# update_games_log('Ben', 'Nick', 'Ben')
+# update_games_log('Ben', 'Nick', 'Nick')
 
 
-cur.execute('''
-    create table Player1Wins as select 
-        player1, 
-        p1win
-    from
-        games 
-''')
+def Top10Wins(conn):  
+    cur = conn.cursor() 
 
-cur.execute('''
-    create table Player2Wins as select 
-        player2, 
-        p2win
-    from
-        games 
-''')
+    cur.execute('''
+        create table Player1Wins as select distinct
+            player1 as player, 
+            sum(p1win) as winner
+        from
+            games 
+        where 
+            p1win = 1
+        group by
+            player1
+    ''')
+
+    cur.execute('''
+        create table Player2Wins as select distinct
+            player2 as player, 
+            sum(p2win) as winner
+        from
+            games 
+        where
+            p2win = 1
+        group by
+            player2
+    ''')
+
+    cur.execute('''
+        create table PlayerWins as 
+            select * from Player1Wins
+        union select * from Player2Wins
+    ''')
+
+    cur.execute('''
+        create table Top10Wins as select distinct
+            player, 
+            sum(winner) as GamesWon
+        from
+            PlayerWins
+        group by
+            player
+        order by
+            GamesWon Desc
+        Limit 10
+    ''')
 
 
+    df = pd.read_sql_query('''select * from Top10Wins''', con = conn)
 
-print(pd.read_sql_query('''select * from Player2Wins''', con = conn))
+    cur.execute('''drop table Player1Wins''')
+    cur.execute('''drop table Player2Wins''')
+    cur.execute('''drop table PlayerWins''')
+    cur.execute('''drop table Top10Wins''')
 
-cur.execute('''drop table Player1Wins''')
-cur.execute('''drop table Player2Wins''')
+    return df
